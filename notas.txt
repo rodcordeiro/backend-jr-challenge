@@ -1,0 +1,51 @@
+Vai receber:
+{
+ "nome": "Fulano da Silva",
+ "cartao_credito": "5476045573597563",
+ "data_compra": "2020-02-14",
+ "valor_compra": 1000.00,
+ "parcelamento": 4,
+ "bandeira": "MASTER",
+ "operacao": "CREDITO"
+}
+
+E tem de responder:
+{
+ "transacao_success": true,
+ "cartao_credito_mascarado": "7563",
+ "total_parcelas": 4,
+ "pagamentos": [
+ 	{
+		"data_pagamento": "2020-03-14",
+		"valor": 237.5,
+		"parcela": 1
+	},
+	{
+		"data_pagamento": "2020-04-14",
+		"valor": 237.5,
+		"parcela": 2
+	},
+	{
+		"data_pagamento": "2020-05-14",
+		"valor": 237.5,
+		"parcela": 3
+	},
+	{
+		"data_pagamento": "2020-06-14",
+		"valor": 237.5,
+		"parcela": 4
+	}
+ ],
+ "valor_compra": 1000,
+ "valor_pagamento": 950,
+ "percentual_repasse": "5%"
+}
+
+Tem de análisar o parcelamento, máximo 12x
+Tem de mascarar o cartão, retornar apenas os 4 últimos dígitos
+Retornar as informações das parcelas, a partir do próximo mês
+Tem de análisar a bandeira, pois define a % de desconto
+    MASTERCARD: 5%
+    VISA: 3%
+    AMEX: 4.9%
+
