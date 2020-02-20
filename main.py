@@ -7,7 +7,16 @@ from datetime import datetime
 from datetime import date
 from decimal import Decimal
 
-payload = json.load(open("request.txt",'r'))
+payload = {
+ "nome": "Fulano da Silva",
+ "cartao_credito": "5476045573597563",
+ "data_compra": "2020-02-14",
+ "valor_compra": 1000.00,
+ "parcelamento": 4,
+ "bandeira": "MASTER",
+ "operacao": "CREDITO"
+}
+
 
 def parcelamento(parcelamento):
     if parcelamento <=12:
@@ -118,15 +127,24 @@ def home():
 
 @app.route('/transaction',methods=['POST'])
 def transacao():
-    payload = {}
+    dads = {
+     "nome": "Fulano da Silva",
+     "cartao_credito": "5476045573597563",
+     "data_compra": "2020-02-14",
+     "valor_compra": 1000.00,
+     "parcelamento": 4,
+     "bandeira": "MASTER",
+     "operacao": "CREDITO"
+    }
+
     payload['nome'] = request.form['nome']
     payload['cartao_credito'] = request.form['cartao']
-    payload['data_compra'] = request.form['data']
+    payload['data_compra'] = str(request.form['data'])
     payload['valor_compra'] = float(request.form['valor'])
     payload['parcelamento'] = int(request.form['parcelamento'])
     payload['bandeira'] = request.form['bandeira']
     payload['operacao'] = request.form['operacao']
-    return jsonify(validar(payload))
+    return validar(payload)
 
 
 
