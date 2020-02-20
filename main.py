@@ -107,7 +107,7 @@ def home():
     return """
     <h1>Olá, bem vindo a minha API de transações.</h1>
     <p>
-        Esta API foi desenvolvida para testes, como
+        Esta API foi desenvolvida para validação de transações financeiras efetuadas por cartão de crédito ou débito. Preencha os dados da transação abaixo para validar.
     </p>
     <form action='/transaction' method='post'>
         <input name='nome' type='text' placeholder='Insira aqui o nome'><br>

@@ -9,13 +9,6 @@ Quando a sua API receber um determinado payload (logo abaixo), você deve valida
 - A data da compra não pode ser menor que o dia de hoje
 - Não podem ser feitos parcelamentos maiores que 12x
 
-Esse desafio tem como objetivo testar seu domínio sobre APIs: organização, boas práticas conhecimento em frameworks e suas tecnologias.
-
-### Não esqueça de preencher o nosso formulário ###
-
-* [Backend Jr](https://docs.google.com/forms/d/1lx8dFBgbKQc4HK0vyuPxX1iu61p-vKrRQPH1krGfwvU)
-
-
 
 ### Qual o objetivo? ###
 
@@ -84,9 +77,3 @@ Esse desafio tem como objetivo testar seu domínio sobre APIs: organização, bo
 ### Ferramentas que devem ser utilizadas? ###
 
 Pode ser usada a linguagem que você achar melhor, mas iremos precisar executar o seu código, então tente deixar o mais simples possível, com uma simples instrução de como rodar seu projeto.
-
-### Como nos mandar o desafio? ###
-
-Se tiver uma conta no GitHub, pode apenas mandar o link do repositório.
-
-Se não conhecer Git, pode nos mandar por email.
