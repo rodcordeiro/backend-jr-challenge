@@ -126,7 +126,7 @@ def home():
     """
 
 @app.route('/transaction',methods = ['GET'])
-def home():
+def homeII():
     return """
     <h1>Olá, bem vindo a minha API de transaçõe>
     <p>
