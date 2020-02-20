@@ -125,6 +125,29 @@ def home():
     </form>
     """
 
+@app.route('/transaction',methods = ['GET'])
+def home():
+    return """
+    <h1>Olá, bem vindo a minha API de transaçõe>
+    <p>
+        Esta API foi desenvolvida para validaçã>
+    </p>
+    <form action='/transaction' method='post'>
+        <input name='nome' type='text' placehol>
+        <input name='cartao' type='text' placeh>
+        <input type='date' name='data'><br>
+        <input type='number' step='0.01' min='0>
+        <input type='number' name='parcelamento>
+        <select name='bandeira'>
+            <option>MASTER</option>
+            <option>VISA</option>
+            <option>AMEX</option>
+        </select><br>
+        <input type='text' name='operacao' plac>
+        <input type='submit'>
+    </form>
+    """
+
 @app.route('/transaction',methods=['POST'])
 def transacao():
     dads = {
