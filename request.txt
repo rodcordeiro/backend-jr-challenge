@@ -1,9 +1,0 @@
-{
- "nome": "Fulano da Silva",
- "cartao_credito": "5476045573597563",
- "data_compra": "2020-02-14",
- "valor_compra": 1000.00,
- "parcelamento": 4,
- "bandeira": "MASTER",
- "operacao": "CREDITO"
-}

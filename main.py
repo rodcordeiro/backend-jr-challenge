@@ -1,13 +1,14 @@
-import requests
+# -*-coding: utf-8 -*-
+
+import flask
+from flask import request, jsonify
 import json
 from datetime import datetime
+from datetime import date
 from decimal import Decimal
-
 
 payload = json.load(open("request.txt",'r'))
 
-
-##Funçoes para validar o payload
 def parcelamento(parcelamento):
     if parcelamento <=12:
         return True
@@ -17,9 +18,9 @@ def parcelamento(parcelamento):
 def parcelas(data_compra,valor_compra,desconto,parcelamento):
     valor_parcela = round(((valor_compra-(valor_compra*desconto))/parcelamento),2)
     parcelas = []
-    date = datetime.strptime(payload['data_compra'],'%Y-%m-%d').date()
-    mes = date.month
-    ano = date.year
+    data = datetime.strptime(payload['data_compra'],'%Y-%m-%d').date()
+    mes = data.month
+    ano = data.year
     parcela = 0
     for parcela in range(parcelamento):
         mes = mes+1
@@ -28,7 +29,7 @@ def parcelas(data_compra,valor_compra,desconto,parcelamento):
             ano = ano +1
         parcela = parcela +1
         parcelas.append({
-    		"data_pagamento": f"{ano}-{mes}-14",
+    		"data_pagamento": f"{ano}-{mes}-{data.day}",
     		"valor": valor_parcela,
     		"parcela": parcela
     	})
@@ -45,7 +46,6 @@ def bandeira(bandeira):
             return False
 
 
-##Função que irá validar o payload
 response={
  "transacao_success": "boolean",
  "cartao_credito_mascarado": "xxxx",
@@ -63,6 +63,11 @@ response={
 }
 
 def validar(payload):
+    erro = ''
+    today = date.today()
+    data = datetime.strptime(payload['data_compra'],'%Y-%m-%d').date()
+    if data < today:
+        erro ='Data de compra menor que data atual'
     response['cartao_credito_mascarado'] = payload["cartao_credito"][-4:]
     response['total_parcelas']=payload['parcelamento']
     if bandeira(payload['bandeira']):
@@ -70,14 +75,59 @@ def validar(payload):
         if parcelamento(payload['parcelamento']):
             response['pagamentos']=parcelas(payload["data_compra"],payload["valor_compra"],bandeira(payload['bandeira']),payload['parcelamento'])
             response['valor_compra']=payload['valor_compra']
-            response['valor_pagamento']=payload['valor_compra']-(payload['valor_compra']*bandeira(payload['bandeira']))
+            response['valor_pagamento']=round(payload['valor_compra']-(payload['valor_compra']*bandeira(payload['bandeira'])),2)
         else:
-            return False
+            erro = 'Parcelamento maior que 12x'
     else:
         return False
 
     response["transacao_success"] = True
-    return response
+    if erro:
+        return erro
+    else:
+        return response
 
 
-print(json.dumps(validar(payload)))
+
+
+app = flask.Flask(__name__)
+app.config['DEBUG'] = True
+
+@app.route('/',methods = ['GET'])
+def home():
+    return """
+    <h1>Olá, bem vindo a minha API de transações.</h1>
+    <p>
+        Esta API foi desenvolvida para testes, como
+    </p>
+    <form action='/transaction' method='post'>
+        <input name='nome' type='text' placeholder='Insira aqui o nome'><br>
+        <input name='cartao' type='text' placeholder='Insira o número do cartão'><br>
+        <input type='date' name='data'><br>
+        <input type='number' step='0.01' min='0.01' name='valor' placeholder='Qual o valor da compra'><br>
+        <input type='number' name='parcelamento' placeholder='Total de parcelas'><br>
+        <select name='bandeira'>
+            <option>MASTER</option>
+            <option>VISA</option>
+            <option>AMEX</option>
+        </select><br>
+        <input type='text' name='operacao' placeholder='CREDITO ou DEBITO'>
+        <input type='submit'>
+    </form>
+    """
+
+@app.route('/transaction',methods=['POST'])
+def transacao():
+    payload = {}
+    payload['nome'] = request.form['nome']
+    payload['cartao_credito'] = request.form['cartao']
+    payload['data_compra'] = request.form['data']
+    payload['valor_compra'] = float(request.form['valor'])
+    payload['parcelamento'] = int(request.form['parcelamento'])
+    payload['bandeira'] = request.form['bandeira']
+    payload['operacao'] = request.form['operacao']
+    return jsonify(validar(payload))
+
+
+
+app.run()
