@@ -1,6 +1,6 @@
 # Backend Jr Challenge #
 
-Estamos acabando de desenvolver nosso novo portal de transações online da StarPay e você vai nos ajudar nessa missão!
+Estamos acabando de desenvolver nosso novo portal de transações online da empresa e você vai nos ajudar nessa missão!
 Nessa integração, entre nosso financeiro e o Portal de Estabelecimentos, precisamos validar as transações e informar como será feito o pagamento aos estabelecimentos que realizaram a transação!
 
 Quando a sua API receber um determinado payload (logo abaixo), você deve validar as seguintes regras.
